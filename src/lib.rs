@@ -48,6 +48,8 @@ pub fn emojify(text: &str) -> String {
                     _ => unreachable!(),
                 }
             )),
+            '?' => result.push_str(":question:"),
+            '!' => result.push_str(":exclamation:"),
             ' ' => result.push_str("   "),
             '\n' => result.push('\n'),
             _ => result.push(char),

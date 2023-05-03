@@ -1,6 +1,6 @@
 [package]
 name = "krabligraphy"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "A crate that is intended for generating text that you can paste into Discord for fun."
