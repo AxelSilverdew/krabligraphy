@@ -9,6 +9,8 @@
 
 #![warn(clippy::missing_docs_in_private_items)]
 
+use rand::{thread_rng, Rng};
+
 /// Takes a sentence and wraps each individual character in spoiler tags.
 pub fn spoilerify(text: &str) -> String {
     text.chars()
@@ -22,6 +24,7 @@ pub fn spoilerify(text: &str) -> String {
 /// Takes a sentence and generates a series of emoji that spells out the entire sentence.
 pub fn emojify(text: &str) -> String {
     let mut result = String::new();
+    let mut rng = thread_rng();
 
     for char in text.chars() {
         match char {
@@ -48,6 +51,16 @@ pub fn emojify(text: &str) -> String {
             ' ' => result.push_str("   "),
             '\n' => result.push('\n'),
             _ => result.push(char),
+        }
+    }
+    result.push('\n');
+    for char in text.chars() {
+        match char {
+            ' ' => result.push_str("   "),
+            _ => result.push_str(&format!(
+                ":woman_gesturing_ok::skin-tone-{}: ",
+                rng.gen_range(1..6)
+            )),
         }
     }
     String::from(result.trim())
