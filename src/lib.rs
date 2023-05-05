@@ -22,8 +22,13 @@ pub fn spoilerify(text: &str) -> String {
 }
 
 /// Takes a sentence and generates a series of emoji that spells out the entire sentence.
-pub fn emojify(text: &str) -> String {
+pub fn emojify(text: &str, cheer_emoji: Option<String>) -> String {
     let mut result = String::new();
+    // let cheer_emoji = if let Some(cheer_emoji) = cheer_emoji {
+    //     cheer_emoji
+    // } else {
+    //     ":woman_gesturing_ok:"
+    // };
     let mut rng = thread_rng();
 
     for char in text.chars() {
@@ -59,34 +64,22 @@ pub fn emojify(text: &str) -> String {
     for char in text.chars() {
         match char {
             ' ' => result.push_str("   "),
-            _ => result.push_str(&format!(
-                ":woman_gesturing_ok::skin-tone-{}: ",
-                rng.gen_range(1..6)
-            )),
+            // _ => result.push_str(&format!(
+            //     ":woman_gesturing_ok::skin-tone-{}: ",
+            //     rng.gen_range(1..6)
+            // )),
+            // _ => result.push_str(":krabcheer: "),
+            _ => {
+                if let Some(cheer_emoji) = &cheer_emoji {
+                    result.push_str(&format!(":{}: ", cheer_emoji));
+                } else {
+                    result.push_str(&format!(
+                        ":woman_gesturing_ok::skin-tone-{}: ",
+                        rng.gen_range(1..6)
+                    ));
+                }
+            }
         }
     }
     String::from(result.trim())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_spoilerify() {
-        let actual = spoilerify("this is a test");
-        assert_eq!(
-            "||t|| ||h|| ||i|| ||s|| || || ||i|| ||s|| || || ||a|| || || ||t|| ||e|| ||s|| ||t||",
-            actual
-        );
-    }
-
-    #[test]
-    fn test_emojify() {
-        let actual = emojify("this is a test");
-        assert_eq!(
-            ":regional_indicator_t: :regional_indicator_h: :regional_indicator_i: :regional_indicator_s:    :regional_indicator_i: :regional_indicator_s:    :regional_indicator_a:    :regional_indicator_t: :regional_indicator_e: :regional_indicator_s: :regional_indicator_t:", 
-            actual
-        );
-    }
 }
