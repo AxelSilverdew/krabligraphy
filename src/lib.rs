@@ -22,13 +22,11 @@ pub fn spoilerify(text: &str) -> String {
 }
 
 /// Takes a sentence and generates a series of emoji that spells out the entire sentence.
+///
+/// - `text` is the text you want to emojify
+/// - `cheer_emoji` is the emoji that will be used under the emojified text
 pub fn emojify(text: &str, cheer_emoji: Option<String>) -> String {
     let mut result = String::new();
-    // let cheer_emoji = if let Some(cheer_emoji) = cheer_emoji {
-    //     cheer_emoji
-    // } else {
-    //     ":woman_gesturing_ok:"
-    // };
     let mut rng = thread_rng();
 
     for char in text.chars() {
@@ -64,11 +62,6 @@ pub fn emojify(text: &str, cheer_emoji: Option<String>) -> String {
     for char in text.chars() {
         match char {
             ' ' => result.push_str("   "),
-            // _ => result.push_str(&format!(
-            //     ":woman_gesturing_ok::skin-tone-{}: ",
-            //     rng.gen_range(1..6)
-            // )),
-            // _ => result.push_str(":krabcheer: "),
             _ => {
                 if let Some(cheer_emoji) = &cheer_emoji {
                     result.push_str(&format!(":{}: ", cheer_emoji));
